@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -148,6 +149,62 @@ public class BasePage extends CommonActions{
         String phoneNum = phoneNumAnimation.getText();
         //TODO Assertation
     }
+
+    public void footerBasePageLinks(String linkName){
+        clickElement(driver.findElement(By.cssSelector("#container1-footer [title=\""+linkName+"\"]")));
+        //Footer links available:
+        //O nama, Gde kupiti, Zaposlenje, Blog, Kako kupiti ONLINE, Najčešća pitanja, Načini plaćanja,
+        //Obaveštenje o pravima potrošača, Rokovi isporuke, Pravni subjekti, Garancije / Reklamacije
+        //Kontakti ovlašćenih servisa
+        //Copy and paste on of them as the 'linkName' parameter without spaces and commas in the WinWinTest class
+    }
+
+    @FindBy(css = ".i.i-facebook")
+    WebElement facebookBtn;
+
+    public void clickFacebookBtn(){
+        clickElement(facebookBtn);
+    }
+
+    @FindBy(css = ".i.i-instagram")
+    WebElement instagramBtn;
+
+    public void clickInstagramBtn(){
+        clickElement(instagramBtn);
+    }
+
+    @FindBy(css = ".i.i-twitter")
+    WebElement twitterBtn;
+
+    public void clickTwitterBtn(){
+        clickElement(twitterBtn);
+    }
+
+    @FindBy(css = ".i.i-youtube")
+    WebElement youTubeBtn;
+
+    public void clickYouTubeBtn(){
+        clickElement(youTubeBtn);
+    }
+
+    @FindBy(css = ".i.i-wlogo")
+    WebElement winWinBlogBtn;
+
+    public void clickWinWinBlogBtn(){
+        clickElement(winWinBlogBtn);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

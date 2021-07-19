@@ -17,8 +17,7 @@ public class WinWinTest extends BaseTest{
         driver.get("https://www.winwin.rs/");
         BasePage bp = new BasePage(driver);
         bp.declinePushNotifications();
-        bp.clickActions();
-        bp.pause(3);
+        bp.footerBasePageLinks("Garancije / Reklamacije");
     }
 
     @AfterMethod
