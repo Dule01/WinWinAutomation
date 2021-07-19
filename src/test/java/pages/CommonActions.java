@@ -1,7 +1,6 @@
 package pages;
 
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
 public class CommonActions {
@@ -25,10 +24,10 @@ public class CommonActions {
         element.sendKeys(Keys.ENTER);
     }
 
-    public void hover(WebElement element){
-        Actions actions = new Actions(driver);
-        actions.moveToElement(element).perform();
-    }
+//    public void hover(WebElement element){
+//        Actions actions = new Actions(driver);
+//        actions.moveToElement(element).build().perform();
+//    }
 
     public void scrollToElement(WebElement element){
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);

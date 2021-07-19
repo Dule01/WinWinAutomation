@@ -3,6 +3,7 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
@@ -51,14 +52,16 @@ public class BasePage extends CommonActions{
     WebElement myAccount;
 
     public void hoverMyAcc(){
-        hover(myAccount);
+        Actions actions = new Actions(driver);
+        actions.moveToElement(myAccount).build().perform();
     }
 
     @FindBy(css = ".cart-link.skip-btn")
     WebElement myBasket;
 
     public void hoverMyBasket(){
-        hover(myBasket);
+        Actions actions = new Actions(driver);
+        actions.moveToElement(myBasket).build().perform();
     }
 
     @FindBy(css = "#newsletter")
@@ -123,8 +126,9 @@ public class BasePage extends CommonActions{
     @FindBy(css = "#menu .menu-item.catalog.overlay-effect")
     WebElement productsTop;
 
-    public void hoverPorducts(){
-        hover(productsTop);
+    public void hoverProducts(){
+        Actions actions = new Actions(driver);
+        actions.moveToElement(productsTop).build().perform();
     }
 
     @FindBy(css = "#menu .menu-item.action-item [href=\"https://www.winwin.rs/filters/product/action/\"]")

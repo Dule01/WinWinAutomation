@@ -34,6 +34,32 @@ public class WinWinTest extends BaseTest{
         bp.searchWebSiteWithEnterKey("iPhone");
     }
 
+    @Test(description = "Verify the functionality of top links")
+    @Description("Verify that all of the 3 links at the top of the page properly work")
+    public void topLinksFunctionality(){
+        driver.get("https://www.winwin.rs/");
+        BasePage bp = new BasePage(driver);
+        bp.declinePushNotifications();
+        bp.clickWhereToBuyTop();
+        bp.clickPaymentMethodsTop();
+        bp.clickCommonQuestionsTop();
+    }
+
+    @Test(description = "Header Hover Tests")
+    @Description("Verify that all of the buttons can be properly hovered with correct display afterwards.")
+    public void headerHoverTests() throws InterruptedException {
+        driver.get("https://www.winwin.rs/");
+        BasePage bp = new BasePage(driver);
+        bp.declinePushNotifications();
+        bp.pause(1);
+        bp.hoverMyAcc();
+        bp.pause(1);
+        bp.hoverMyBasket();
+        bp.pause(1);
+        bp.hoverProducts();
+        bp.pause(1);
+    }
+
     @AfterMethod
     public void tearDown(){
         quitBrowser();
