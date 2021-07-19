@@ -156,7 +156,7 @@ public class BasePage extends CommonActions{
         //O nama, Gde kupiti, Zaposlenje, Blog, Kako kupiti ONLINE, Najčešća pitanja, Načini plaćanja,
         //Obaveštenje o pravima potrošača, Rokovi isporuke, Pravni subjekti, Garancije / Reklamacije
         //Kontakti ovlašćenih servisa
-        //Copy and paste on of them as the 'linkName' parameter without spaces and commas in the WinWinTest class
+        //Copy and paste one of them as the 'linkName' parameter without spaces and commas in the WinWinTest class
     }
 
     @FindBy(css = ".i.i-facebook")
@@ -193,6 +193,15 @@ public class BasePage extends CommonActions{
     public void clickWinWinBlogBtn(){
         clickElement(winWinBlogBtn);
     }
+
+    @FindBy(css = ".logo")
+    WebElement homeLogoBtn;
+
+    public void clickHomeLogo(){
+        clickElement(homeLogoBtn);
+    }
+
+
 
 
 
