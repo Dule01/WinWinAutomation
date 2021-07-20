@@ -1,8 +1,6 @@
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
+package pages;
+
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.Select;
 
 public class CommonActions {
@@ -22,10 +20,14 @@ public class CommonActions {
         element.sendKeys(textValue);
     }
 
-    public void hover(WebElement element){
-        Actions actions = new Actions(driver);
-        actions.moveToElement(element).build().perform();
+    public void clickEnter(WebElement element){
+        element.sendKeys(Keys.ENTER);
     }
+
+//    public void hover(WebElement element){
+//        Actions actions = new Actions(driver);
+//        actions.moveToElement(element).build().perform();
+//    }
 
     public void scrollToElement(WebElement element){
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
@@ -39,6 +41,10 @@ public class CommonActions {
     public void selectByIndex(WebElement element, int i){
         Select select = new Select(element);
         select.selectByIndex(i);
+    }
+
+    public void pause(int time) throws InterruptedException {
+        Thread.sleep(time * 1000);
     }
 
 }
