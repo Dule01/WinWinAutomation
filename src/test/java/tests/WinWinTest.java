@@ -6,10 +6,10 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.BasePage;
 
-public class WinWinTest extends BaseTest{
+public class WinWinTest extends BaseTest {
 
     @BeforeMethod
-    public void setUp(){
+    public void setUp() {
         init("CHROME", 15);
     }
 
@@ -60,8 +60,72 @@ public class WinWinTest extends BaseTest{
         bp.pause(1);
     }
 
+    @Test(description = "Verify Help Box Links")
+    @Description("Verify that all of the 3 help box links are clickable and functional.")
+    public void helpBoxTest() throws InterruptedException {
+        driver.get("https://www.winwin.rs/");
+        BasePage bp = new BasePage(driver);
+        bp.declinePushNotifications();
+        bp.clickBusinessBenefits();
+        bp.clickTaxFree();
+        bp.clickFeedback();
+        bp.pause(2);
+    }
+
+    @Test(description = "Newsletter with an invalid email address")
+    @Description("Verify that proper error text is displayed if an incorrect email address is entered")
+    public void newsletterTest(){
+        driver.get("https://www.winwin.rs/");
+        BasePage bp = new BasePage(driver);
+        bp.declinePushNotifications();
+        bp.newsletterInvalidEmail("123");
+    }
+
+    @Test(description = "Newsletter with a valid email address")
+    @Description("Verify that proper error text is displayed if a correct email address is entered")
+    public void newsletterTest2(){
+        driver.get("https://www.winwin.rs/");
+        BasePage bp = new BasePage(driver);
+        bp.declinePushNotifications();
+        bp.newsletterValidEmail("testemail12901@mail.com");
+    }
+
+    @Test(description = "Verify functionality of footer links")
+    @Description("Verify that footer links are clickable and lead to intended web page")
+    public void footerLinks() {
+        driver.get("https://www.winwin.rs/");
+        BasePage bp = new BasePage(driver);
+        bp.declinePushNotifications();
+        bp.footerBasePageLinks("Gde kupiti");
+        bp.footerBasePageLinks("Rokovi isporuke");
+        bp.footerBasePageLinks("Kontakti ovlašćenih servisa ");
+    }
+
+    @Test(description = "Social Links Functionality")
+    @Description("Veirfy that all of the social link buttons are clickable and functional")
+    public void socialLinks() throws InterruptedException {
+        driver.get("https://www.winwin.rs/");
+        BasePage bp = new BasePage(driver);
+        bp.declinePushNotifications();
+        bp.clickFacebookBtn();
+        bp.clickInstagramBtn();
+        bp.clickTwitterBtn();
+        bp.clickYouTubeBtn();
+        bp.clickWinWinBlogBtn();
+        bp.pause(3);
+    }
+
+    @Test(description = "Verify Phone Numbers")
+    @Description("Verify that at least one of 3 contact numbers appears")
+    public void phoneNumbersTest() throws InterruptedException {
+        driver.get("https://www.winwin.rs/");
+        BasePage bp = new BasePage(driver);
+        bp.declinePushNotifications();
+        bp.verifyPhoneNumbers();
+    }
+
     @AfterMethod
-    public void tearDown(){
+    public void tearDown() {
         quitBrowser();
     }
 

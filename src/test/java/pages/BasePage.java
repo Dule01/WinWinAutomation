@@ -73,12 +73,23 @@ public class BasePage extends CommonActions{
     @FindBy(css = ".validation-advice")
     WebElement validationText;
 
+    @FindBy(css = ".success-msg")
+    WebElement successMessage;
+
     public void newsletterInvalidEmail(String invalidEmail){                 //invalid email = anything without '@' e.g.
         clickElement(newsletterBar);
         typeText(newsletterBar, invalidEmail);
         clickElement(newsletterSignUp);
         String errorText = validationText.getText();
         Assert.assertEquals(errorText, "Molimo unesite ispravnu email adresu. Npr. milanpetrovic@domen.com.");
+    }
+
+    public void newsletterValidEmail(String validEmail){                 //valid email = testmail1234@mail.com e.g.
+        clickElement(newsletterBar);
+        typeText(newsletterBar, validEmail);
+        clickElement(newsletterSignUp);
+        String successText = successMessage.getText();
+        Assert.assertEquals(successText, "Zahtev za potvrdu je poslat.");
     }
 
     @FindBy(css = ".i.i-benefit")
@@ -149,9 +160,9 @@ public class BasePage extends CommonActions{
     WebElement phoneNumAnimation;
 
     public void verifyPhoneNumbers(){
-        String expectedNumbers;
         String phoneNum = phoneNumAnimation.getText();
-        //TODO Assertation
+        Assert.assertTrue(phoneNum.contains("Call Centar: 0700 330 330") ||
+                phoneNum.contains("Call Centar: 066 890 11 77") || phoneNum.contains("Pravna lica: 011 402 27 24"));
     }
 
     public void footerBasePageLinks(String linkName){
@@ -159,7 +170,7 @@ public class BasePage extends CommonActions{
         //Footer links available:
         //O nama, Gde kupiti, Zaposlenje, Blog, Kako kupiti ONLINE, Najčešća pitanja, Načini plaćanja,
         //Obaveštenje o pravima potrošača, Rokovi isporuke, Pravni subjekti, Garancije / Reklamacije
-        //Kontakti ovlašćenih servisa
+        //Kontakti ovlašćenih servisa  <- past this one with one space, it's there for some reason
         //Copy and paste one of them as the 'linkName' parameter without spaces and commas in the WinWinTest class
     }
 
