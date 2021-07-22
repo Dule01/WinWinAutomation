@@ -4,6 +4,7 @@ import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pages.BasePage;
 import pages.ProductsPage;
@@ -12,29 +13,33 @@ import pages.RegisterPage;
 public class WinWinTest extends BaseTest {
 
     @BeforeMethod
-    public void setUp() {
-        init("CHROME", 15);
+    @Parameters ({"browser"})
+    public void setUp(String browser) {
+        init(browser, 15);
     }
+
 
     @Test(description = "Verify functionality of Search Bar")
     @Description("Verify that the Search Bar properly functions after entering a text value and clicking the Search Button")
-    public void searchBarTest(){
+    @Parameters({"searchWebsite"})
+    public void searchBarTest(String searchWebsite){
         driver.get("https://www.winwin.rs/");
         BasePage bp = new BasePage(driver);
         bp.declinePushNotifications();
         bp.clickSearchBar();
-        bp.searchWebSite("iPhone");
+        bp.searchWebSite(searchWebsite);
     }
 
     @Test(description = "Verify functionality of Search Bar")
     @Description("Verify that the Search Bar properly functions after entering a text value and hitting the Enter " +
             "Button on the keyboard.")
-    public void searchBarTestUsingEnter(){
+    @Parameters({"searchWebWithEnterKey"})
+    public void searchBarTestUsingEnter(String searchWebWithEnterKey){
         driver.get("https://www.winwin.rs/");
         BasePage bp = new BasePage(driver);
         bp.declinePushNotifications();
         bp.clickSearchBar();
-        bp.searchWebSiteWithEnterKey("iPhone");
+        bp.searchWebSiteWithEnterKey(searchWebWithEnterKey);
     }
 
     @Test(description = "Verify the functionality of top links")
@@ -77,11 +82,12 @@ public class WinWinTest extends BaseTest {
 
     @Test(description = "Newsletter with an invalid email address")
     @Description("Verify that proper error text is displayed if an incorrect email address is entered")
-    public void newsletterTest(){
+    @Parameters({"setInvalidEmail"})
+    public void newsletterTest(String invalidEmail){
         driver.get("https://www.winwin.rs/");
         BasePage bp = new BasePage(driver);
         bp.declinePushNotifications();
-        bp.newsletterInvalidEmail("123");
+        bp.newsletterInvalidEmail(invalidEmail);
     }
 
     @Test(description = "Newsletter with a valid email address")
@@ -129,16 +135,17 @@ public class WinWinTest extends BaseTest {
 
     @Test(description = "Product filtering by price")
     @Description("Verify that proper product are listed after selecting them and filtering them by price")
-    public void searchProducts() throws InterruptedException {
+    @Parameters({"selectProductCategory", "selectProductType", "selectMinimumPrice"})
+    public void searchProducts(String category, String type, String price) throws InterruptedException {
         driver.get("https://www.winwin.rs/");
         BasePage bp = new BasePage(driver);
         bp.declinePushNotifications();
         bp.hoverProducts();
         ProductsPage pp = new ProductsPage(driver);
         pp.pause(1);
-        pp.selectProdCategoryAndType("Laptop i tablet računari", "Laptopovi");
+        pp.selectProdCategoryAndType(category, type);
         pp.pause(1);
-        pp.filterProdByMinimumPrice("50000.00");
+        pp.filterProdByMinimumPrice(price);
 
         for(int i = 0; i < pp.productTypeName.size(); i++){
             Assert.assertTrue(pp.productTypeName.get(i).getText().contains("Laptop") || pp.productTypeName.get(i).getText().contains("laptop"));
@@ -148,27 +155,29 @@ public class WinWinTest extends BaseTest {
     @Test(description = "Verify that Compare buttons properly function")
     @Description("Verify that the random compare button properly works and that the appropriate text appears after " +
             "clicking it")
-    public void verifyCompareText() throws InterruptedException {
+    @Parameters({"selectProductCategory", "selectProductType"})
+    public void verifyCompareText(String category, String type) throws InterruptedException {
         driver.get("https://www.winwin.rs/");
         BasePage bp = new BasePage(driver);
         bp.declinePushNotifications();
         bp.hoverProducts();
         ProductsPage pp = new ProductsPage(driver);
         pp.pause(1);
-        pp.selectProdCategoryAndType("Laptop i tablet računari", "Laptopovi");
+        pp.selectProdCategoryAndType(category, type);
         pp.clickRandomCompareButton();
     }
 
     @Test(description = "Verify that Details buttons properly function")
     @Description("Verify that random Details button properly works and that the product type is appropriate")
-    public void verifyDetailsButton() throws InterruptedException {
+    @Parameters({"selectProductCategory", "selectProductType"})
+    public void verifyDetailsButton(String category, String type) throws InterruptedException {
         driver.get("https://www.winwin.rs/");
         BasePage bp = new BasePage(driver);
         bp.declinePushNotifications();
         bp.hoverProducts();
         ProductsPage pp = new ProductsPage(driver);
         pp.pause(1);
-        pp.selectProdCategoryAndType("Laptop i tablet računari", "Laptopovi");
+        pp.selectProdCategoryAndType(category, type);
         pp.clickRandomDetailsButton();
     }
 
