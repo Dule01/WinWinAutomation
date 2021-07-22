@@ -1,10 +1,13 @@
 package tests;
 
 import io.qameta.allure.Description;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.BasePage;
+import pages.ProductsPage;
+import pages.RegisterPage;
 
 public class WinWinTest extends BaseTest {
 
@@ -87,7 +90,7 @@ public class WinWinTest extends BaseTest {
         driver.get("https://www.winwin.rs/");
         BasePage bp = new BasePage(driver);
         bp.declinePushNotifications();
-        bp.newsletterValidEmail("testemail12901@mail.com");
+        bp.newsletterValidEmail("testemail"+System.currentTimeMillis()+"@mail.com");
     }
 
     @Test(description = "Verify functionality of footer links")
@@ -123,6 +126,107 @@ public class WinWinTest extends BaseTest {
         bp.declinePushNotifications();
         bp.verifyPhoneNumbers();
     }
+
+    @Test(description = "Product filtering by price")
+    @Description("Verify that proper product are listed after selecting them and filtering them by price")
+    public void searchProducts() throws InterruptedException {
+        driver.get("https://www.winwin.rs/");
+        BasePage bp = new BasePage(driver);
+        bp.declinePushNotifications();
+        bp.hoverProducts();
+        ProductsPage pp = new ProductsPage(driver);
+        pp.pause(1);
+        pp.selectProdCategoryAndType("Laptop i tablet računari", "Laptopovi");
+        pp.pause(1);
+        pp.filterProdByMinimumPrice("50000.00");
+
+        for(int i = 0; i < pp.productTypeName.size(); i++){
+            Assert.assertTrue(pp.productTypeName.get(i).getText().contains("Laptop") || pp.productTypeName.get(i).getText().contains("laptop"));
+        }
+    }
+
+    @Test(description = "Verify that Compare buttons properly function")
+    @Description("Verify that the random compare button properly works and that the appropriate text appears after " +
+            "clicking it")
+    public void verifyCompareText() throws InterruptedException {
+        driver.get("https://www.winwin.rs/");
+        BasePage bp = new BasePage(driver);
+        bp.declinePushNotifications();
+        bp.hoverProducts();
+        ProductsPage pp = new ProductsPage(driver);
+        pp.pause(1);
+        pp.selectProdCategoryAndType("Laptop i tablet računari", "Laptopovi");
+        pp.clickRandomCompareButton();
+    }
+
+    @Test(description = "Verify that Details buttons properly function")
+    @Description("Verify that random Details button properly works and that the product type is appropriate")
+    public void verifyDetailsButton() throws InterruptedException {
+        driver.get("https://www.winwin.rs/");
+        BasePage bp = new BasePage(driver);
+        bp.declinePushNotifications();
+        bp.hoverProducts();
+        ProductsPage pp = new ProductsPage(driver);
+        pp.pause(1);
+        pp.selectProdCategoryAndType("Laptop i tablet računari", "Laptopovi");
+        pp.clickRandomDetailsButton();
+    }
+
+    @Test(description = "Successful Regsitration")
+    @Description("Verify that the user is able to properly register and that a correct text appears after the registration.")
+    public void registerCorrectly() throws InterruptedException {
+        driver.get("https://www.winwin.rs/");
+        BasePage bp = new BasePage(driver);
+        bp.declinePushNotifications();
+        bp.hoverMyAcc();
+
+        RegisterPage rp = new RegisterPage(driver);
+        rp.clickRegisterLink();
+        rp.pause(10);                         //pause to enter captcha
+        rp.validRegistration();
+    }
+
+    @Test(description = "Verify text for an invalid email")
+    @Description("Verify that the text appearing after entering an invalid email address is correct.")
+    public void registerWithInvalidEmail() throws InterruptedException {
+        driver.get("https://www.winwin.rs/");
+        BasePage bp = new BasePage(driver);
+        bp.declinePushNotifications();
+        bp.hoverMyAcc();
+
+        RegisterPage rp = new RegisterPage(driver);
+        rp.clickRegisterLink();
+        rp.pause(10);                         //pause to enter captcha
+        rp.invalidEmailAddress();
+    }
+
+    @Test(description = "Verify text after entering a short password")
+    @Description("Make sure that the error text is correct after entering a too short password.")
+    public void registerWithTooShortPass() throws InterruptedException {
+        driver.get("https://www.winwin.rs/");
+        BasePage bp = new BasePage(driver);
+        bp.declinePushNotifications();
+        bp.hoverMyAcc();
+
+        RegisterPage rp = new RegisterPage(driver);
+        rp.clickRegisterLink();
+        rp.pause(10);                         //pause to enter captcha
+        rp.passTooShort();
+    }
+
+    @Test(description = "Verify that the Back button properly functions")
+    @Description("Verify that the user goes back to the Home Page after clicking the Back button on the Register page")
+    public void verifyBackButton(){
+        driver.get("https://www.winwin.rs/");
+        BasePage bp = new BasePage(driver);
+        bp.declinePushNotifications();
+        bp.hoverMyAcc();
+
+        RegisterPage rp = new RegisterPage(driver);
+        rp.clickRegisterLink();
+        rp.clickBackButton();
+    }
+
 
     @AfterMethod
     public void tearDown() {
