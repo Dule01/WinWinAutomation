@@ -158,6 +158,19 @@ public class WinWinTest extends BaseTest {
         pp.clickRandomCompareButton();
     }
 
+    @Test(description = "Verify that Details buttons properly function")
+    @Description("Verify that random Details button properly works and that the product type is appropriate")
+    public void verifyDetailsButton() throws InterruptedException {
+        driver.get("https://www.winwin.rs/");
+        BasePage bp = new BasePage(driver);
+        bp.declinePushNotifications();
+        bp.hoverProducts();
+        ProductsPage pp = new ProductsPage(driver);
+        pp.pause(1);
+        pp.selectProdCategoryAndType("Laptop i tablet računari", "Laptopovi");
+        pp.clickRandomDetailsButton();
+    }
+
     @AfterMethod
     public void tearDown() {
         quitBrowser();

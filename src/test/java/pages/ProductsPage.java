@@ -39,6 +39,9 @@ public class ProductsPage extends CommonActions{
     @FindBy(css = ".success-msg")
     WebElement compareSuccessMsg;
 
+    @FindBy(css = ".products-grid .product-details")
+    public List<WebElement> detailsButtons;
+
 
 
     public void clickRandomCompareButton(){
@@ -49,6 +52,20 @@ public class ProductsPage extends CommonActions{
 
         String compareSuccessText = compareSuccessMsg.getText();
         Assert.assertTrue(compareSuccessText.contains("je dodat na listu za poređenje."));
+    }
+
+    @FindBy(xpath = "//*[@id=\"product_tabs_additional_contents\"]//*[@class=\"even\"]//*[@class=\"label\" and contains(text(), \"Naziv i vrsta robe\")]/following-sibling::td")
+    WebElement productType;
+
+    public void clickRandomDetailsButton(){
+        Random randomDetailsBtn = new Random();
+        int randomNum = randomDetailsBtn.nextInt(detailsButtons.size());
+        clickElement(detailsButtons.get(randomNum));
+        System.out.println("Clicked " + randomNum);
+
+        String getProductTypeText = productType.getText();
+        Assert.assertEquals(getProductTypeText, "Laptop");
+
     }
 
 
