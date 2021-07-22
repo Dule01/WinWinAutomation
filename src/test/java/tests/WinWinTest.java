@@ -7,6 +7,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.BasePage;
 import pages.ProductsPage;
+import pages.RegisterPage;
 
 public class WinWinTest extends BaseTest {
 
@@ -89,7 +90,7 @@ public class WinWinTest extends BaseTest {
         driver.get("https://www.winwin.rs/");
         BasePage bp = new BasePage(driver);
         bp.declinePushNotifications();
-        bp.newsletterValidEmail("testemail12901@mail.com");
+        bp.newsletterValidEmail("testemail"+System.currentTimeMillis()+"@mail.com");
     }
 
     @Test(description = "Verify functionality of footer links")
@@ -170,6 +171,62 @@ public class WinWinTest extends BaseTest {
         pp.selectProdCategoryAndType("Laptop i tablet računari", "Laptopovi");
         pp.clickRandomDetailsButton();
     }
+
+    @Test(description = "Successful Regsitration")
+    @Description("Verify that the user is able to properly register and that a correct text appears after the registration.")
+    public void registerCorrectly() throws InterruptedException {
+        driver.get("https://www.winwin.rs/");
+        BasePage bp = new BasePage(driver);
+        bp.declinePushNotifications();
+        bp.hoverMyAcc();
+
+        RegisterPage rp = new RegisterPage(driver);
+        rp.clickRegisterLink();
+        rp.pause(10);                         //pause to enter captcha
+        rp.validRegistration();
+    }
+
+    @Test(description = "Verify text for an invalid email")
+    @Description("Verify that the text appearing after entering an invalid email address is correct.")
+    public void registerWithInvalidEmail() throws InterruptedException {
+        driver.get("https://www.winwin.rs/");
+        BasePage bp = new BasePage(driver);
+        bp.declinePushNotifications();
+        bp.hoverMyAcc();
+
+        RegisterPage rp = new RegisterPage(driver);
+        rp.clickRegisterLink();
+        rp.pause(10);                         //pause to enter captcha
+        rp.invalidEmailAddress();
+    }
+
+    @Test(description = "Verify text after entering a short password")
+    @Description("Make sure that the error text is correct after entering a too short password.")
+    public void registerWithTooShortPass() throws InterruptedException {
+        driver.get("https://www.winwin.rs/");
+        BasePage bp = new BasePage(driver);
+        bp.declinePushNotifications();
+        bp.hoverMyAcc();
+
+        RegisterPage rp = new RegisterPage(driver);
+        rp.clickRegisterLink();
+        rp.pause(10);                         //pause to enter captcha
+        rp.passTooShort();
+    }
+
+    @Test(description = "Verify that the Back button properly functions")
+    @Description("Verify that the user goes back to the Home Page after clicking the Back button on the Register page")
+    public void verifyBackButton(){
+        driver.get("https://www.winwin.rs/");
+        BasePage bp = new BasePage(driver);
+        bp.declinePushNotifications();
+        bp.hoverMyAcc();
+
+        RegisterPage rp = new RegisterPage(driver);
+        rp.clickRegisterLink();
+        rp.clickBackButton();
+    }
+
 
     @AfterMethod
     public void tearDown() {
